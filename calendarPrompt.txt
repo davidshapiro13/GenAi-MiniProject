@@ -1,0 +1,124 @@
+Calendar Interactions:
+
+1. CREATING AN EVENT
+
+Please return your request in this JSON format.
+If you don't have answer "Summary", "description", "start", or "end", make your best guess.
+For the others, simply leave them blank if not specified.
+
+INPUT:
+
+{ action: "create",
+    params:
+    {
+        'summary': String,
+        'location': String,
+        'description': String,
+        'start': {
+            'dateTime': String,
+            'timeZone': String,
+        },
+        'end': {
+            'dateTime': String,
+            'timeZone': String,
+            },
+        'recurrence': [
+            String
+        ],
+        'attendees': [
+            {'email': String},
+            {'email': String},
+        ],
+    }
+}
+
+OUTPUT: Link to Event
+
+Example of dateTime: '2015-05-28T09:00:00-07:00' 
+Example of timeZone: 'America/Los_Angeles'
+Example of recurrence: 'RRULE:FREQ=DAILY;COUNT=2'
+-------------------------------------------------
+2. LIST CALENDAR EVENTS
+
+Please return your request in this JSON format.
+
+INPUT:
+
+{ action: "list"
+    params:
+        {
+            'start_date': String,
+            'num_results': Integer,
+        }
+}
+
+Example of start_date: '2015-05-28T09:00:00-07:00'
+Example of num_results: 3
+
+OUTPUT:
+
+List of events with this structure.
+    {
+        'summary': String,
+        'description': String,
+        'location': String,
+        'start': {
+            'dateTime': String,
+            'timeZone': String,
+        },
+        'end': {
+            'dateTime': String,
+            'timeZone': String,
+            },
+    }
+Example of dateTime: '2015-05-28T09:00:00-07:00' 
+Example of timeZone: 'America/Los_Angeles'
+-------------------------------------------------
+3. DELETE CALENDAR EVENT
+
+Please provide your request in this format.
+
+INPUT:
+
+{ action: "delete"
+    params:
+        {
+            'event_id': String
+        }
+}
+
+OUTPUT: the event id
+
+Example of event_id: '2mji6pcrgr226glrfr3ocgi5ak_20260301T160000Z'
+
+Note: you must first list events in order to find the event_id you want to delete.
+--------------------------------------------------
+4. UPDATE CALENDAR EVENT
+
+INPUT:
+
+{ action: 'update'
+    params:
+        {
+            'event_id': String,
+            'body': {
+                'summary': String,
+                'description': String,
+            'location': String,
+            'start': {
+                'dateTime': String,
+                'timeZone': String,
+            },
+            'end': {
+                'dateTime': String,
+                'timeZone': String,
+                }
+            }
+        }
+}
+
+OUTPUT: Link to Event
+
+Note: The body can have any or all of those fields depending on what needs to be updated.
+Example of dateTime: '2015-05-28T09:00:00-07:00' 
+Example of timeZone: 'America/Los_Angeles'
