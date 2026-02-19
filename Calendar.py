@@ -44,7 +44,7 @@ class Calendar():
             body = json['body'],
             sendUpdates='all'
         ).execute()
-        return json['evet_id']
+        return json['event_id']
 
 
     def get_events(self):

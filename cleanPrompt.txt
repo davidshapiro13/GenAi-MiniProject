@@ -18,3 +18,15 @@ TYPE 2: Deleted an item
 You should return as:
 
 <SUMMARY> - <DATE> <TIME> succesfully deleted
+
+TYPE 3: Updating an item
+
+You should return as:
+
+<SUMMARY> - <DATE> <TIME> successfully updated.
+
+TYPE 3: Creating an item
+
+You should return as:
+
+<SUMMARY> - <DATE> <TIME> successfully created.
