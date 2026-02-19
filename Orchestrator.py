@@ -10,6 +10,7 @@ class Orchestrator():
         elif json['action'] == 'update':
             return self.calendar.update_event(json['params'])
         elif json['action'] == 'delete':
+            event_list = self.calendar.get_events(json['params'])
             return self.calendar.delete_event(json['params'])
         elif json['action'] == 'list':
             return self.calendar.get_events(json['params'])

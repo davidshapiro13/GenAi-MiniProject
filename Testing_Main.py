@@ -3,9 +3,11 @@ from llmproxy import LLMProxy
 import random
 from Orchestrator import Orchestrator
 import ast
+from AI import AI
 
 client = LLMProxy()
 orchestrator = Orchestrator()
+agent = AI()
 
 system_instructions = ""
 
@@ -20,16 +22,9 @@ rag_enabled = False
 no_action = True
 
 query_prompt = input("what would you like to do?")
+
 while "EXIT" not in query_prompt:
-    output = client.generate(
-            model = model_name,
-            system = system_instructions,
-            query = query_prompt,
-            temperature = temperature_value,
-            lastk = last_queries,
-            session_id = session_id_value,
-            rag_usage = rag_enabled,
-    )['result']
+    output = agent.run(system_instructions, query_prompt)
     print(output)
     output = ast.literal_eval(output)
     result = orchestrator.run(output)
