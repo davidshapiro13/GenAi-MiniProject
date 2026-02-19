@@ -8,8 +8,8 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 class Calendar():
-
     def __init__(self):
+        self.oldest_day = '2015-05-28T09:00:00-07:00' 
         SCOPES = ["https://www.googleapis.com/auth/calendar"]
         creds = None
         # The file token.json stores the user's access and refresh tokens, and is
@@ -34,7 +34,7 @@ class Calendar():
     def create_event(self, json):
         event = json
         event = self.service.events().insert(calendarId='primary', body=event).execute()
-        print(event.get("htmlLink"))
+        return event.get("htmlLink")
 
 
     def update_event(self, json):
@@ -44,14 +44,15 @@ class Calendar():
             body = json['body'],
             sendUpdates='all'
         ).execute()
+        return json['evet_id']
 
 
-    def get_events(self, json):
+    def get_events(self):
         
         events_results = self.service.events().list(
             calendarId="primary",
-            timeMin=json['start_date'],
-            maxResults=json['num_results'],
+            timeMin='2015-05-28T09:00:00-07:00' ,
+            maxResults=200,
             singleEvents=True,
             orderBy="startTime",
         ).execute()
@@ -64,6 +65,7 @@ class Calendar():
             calendarId = 'primary',
             eventId = json['event_id']
         ).execute()
+        return json['event_id']
 
 '''
 Used AI to figure out how to delete an event and update an event. 

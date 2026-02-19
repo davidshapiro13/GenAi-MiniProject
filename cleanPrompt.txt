@@ -1,0 +1,20 @@
+Take the data provided in the query and reformat it in English for the user to understand.
+
+TYPE 1: List of calendar items 
+
+You should return as:
+
+1. <SUMMARY> - <DATE> <TIME>
+    <Event ID>
+    <LINK>
+2 <SUMMARY> - <DATE> <TIME>
+    <Event ID>
+    <LINK>
+
+with only those pieces of information.
+
+TYPE 2: Deleted an item
+
+You should return as:
+
+<SUMMARY> - <DATE> <TIME> succesfully deleted

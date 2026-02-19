@@ -54,15 +54,7 @@ INPUT:
 
 { 'action': 'list',
     'response': String,
-    'params':
-        {
-            'start_date': String,
-            'num_results': Integer,
-        }
 }
-
-Example of start_date: '2015-05-28T09:00:00-07:00'
-Example of num_results: 3
 
 OUTPUT:
 
@@ -86,23 +78,34 @@ Example of timeZone: 'America/Los_Angeles'
 -------------------------------------------------
 3. DELETE CALENDAR EVENT
 
-Please provide your request in this format.
+Please provide your request in this format. You don't need all those parameters but you may find some helpful.
+
 
 INPUT:
 
 { 'action': "delete",
-    'response': String,
-    'params':
-        {
-            'event_id': String
-        }
+    'keywords': String,
 }
 
-OUTPUT: the event id
+OUTPUT:
 
-Example of event_id: '2mji6pcrgr226glrfr3ocgi5ak_20260301T160000Z'
-
-Note: you must first list events in order to find the event_id you want to delete.
+List of events with this structure.
+    {
+        'event_id': String,
+        'summary': String,
+        'description': String,
+        'location': String,
+        'start': {
+            'dateTime': String,
+            'timeZone': String,
+        },
+        'end': {
+            'dateTime': String,
+            'timeZone': String,
+            },
+    }
+Example of dateTime: '2015-05-28T09:00:00-07:00' 
+Example of timeZone: 'America/Los_Angeles'
 --------------------------------------------------
 4. UPDATE CALENDAR EVENT
 
@@ -138,7 +141,7 @@ Example of timeZone: 'America/Los_Angeles'
 
 5. NEED MORE INFORMATION
 
-Never ask for an Event ID. The user will not know what that means.
+Never ask for an Event ID. The user will not know what that means. Only use this if you do not have any needed information.
 
 INPUT:
 
