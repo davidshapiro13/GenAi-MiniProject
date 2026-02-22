@@ -23,9 +23,8 @@ class Calendar():
                 creds.refresh(Request())
             else:
                 flow = InstalledAppFlow.from_client_secrets_file(
-                "credentials.json", SCOPES
-            )
-            creds = flow.run_local_server(port=0)
+                "credentials.json", SCOPES )
+                creds = flow.run_local_server(port=0)
             # Save the credentials for the next run
             with open("token.json", "w") as token:
                 token.write(creds.to_json())
@@ -36,6 +35,11 @@ class Calendar():
         event = self.service.events().insert(calendarId='primary', body=event).execute()
         return event.get("htmlLink")
 
+    def mass_create_events(self, json):
+        urls = []
+        for item in json:
+            new_url = self.create_event(item)
+            urls.append(new_url)
 
     def update_event(self, json):
         updated_event = self.service.events().patch (
@@ -65,7 +69,7 @@ class Calendar():
             calendarId = 'primary',
             eventId = json['event_id']
         ).execute()
-        return json['event_id']
+        return "Successfully deleted"
 
 '''
 Used AI to figure out how to delete an event and update an event. 
