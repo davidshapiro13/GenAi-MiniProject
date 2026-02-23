@@ -3,7 +3,7 @@ from Orchestrator import Orchestrator
 import ast
 from AI import AI
 import random
-from ai_prompts import SCHEDULER_SYSTEM, CLEAN_PROMPT, GET_SYLLABUS, WORK_TIME, build_scheduler_prompt
+from ai_prompts import SCHEDULER_SYSTEM, CLEAN_PROMPT, GET_SYLLABUS, build_scheduler_prompt
 import time
 from config import (
     MODEL,
@@ -29,17 +29,18 @@ orchestrator = Orchestrator(agent)
 def first_time_run():
     prompt = "Do you have a syllabus to add?"
     while True:
-        query_prompt = input(prompt)
+        print(prompt)
+        query_prompt = input("You: ")
         output = agent.run(GET_SYLLABUS, query_prompt, session=memory_session)
         output = ast.literal_eval(output)
-        if output['path'] != "" and output['name'] != "":
+        if output['path'] != "":
             agent.upload_rag(output['path'])
             time.sleep(4)
-            return(output['name'])
+            return
         prompt = output['response']
         
 if not previous_user:
-    course_session = first_time_run()
+    first_time_run()
 
 query_prompt = input("How can I help? ")
 while "EXIT" not in query_prompt:

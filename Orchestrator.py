@@ -27,15 +27,16 @@ class Orchestrator():
             return "ACTION NOT FOUND"
         
     def check_approval(self, json, alteration_function):
-        approval_question = self.agent.run(APPROVAL_PROMPT, json, self.agent.chat_session)
-        response = input(approval_question)
+        approval_question = self.agent.run(APPROVAL_PROMPT, json, self.agent.memory_session)
+        print(approval_question)
+        response = input("You: ")
         decision = self.agent.run(YES_NO_PROMPT, response, "General")
         if decision == "yes":
             if type(json) == str:
                 json = ast.literal_eval(json)
             return alteration_function(json['params'])
         elif decision == "change":
-            update = self.agent.run(CHANGE_PROMPT, str(json) + " " + response, self.agent.chat_session)
+            update = self.agent.run(CHANGE_PROMPT, str(json) + " " + response, self.agent.memory_session)
             return self.check_approval(update, alteration_function)
         else:
             print("No problem. I'll leave the calendar as is.")
@@ -57,12 +58,12 @@ class Orchestrator():
         return "successfully added!" + result
     
     def get_info(self, prompt, context, query):
-        output = self.agent.run(prompt + " " + context, query, session=self.agent.chat_session)
+        output = self.agent.run(prompt + " " + context, query, session=self.agent.memory_session)
         print("GETTING INFO")
         while output.startswith("RESPONSE:"):
-            print(output[10:])
+            print("THIS IS FROM HERE" + output[10:])
             context = context + query
             query = input("You: ")
-            output = self.agent.run(prompt + " " + context, query, session=self.agent.chat_session)
+            output = self.agent.run(prompt + " " + context, query, session=self.agent.memory_session)
         output = ast.literal_eval(output)
         return output
