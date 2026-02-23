@@ -58,6 +58,7 @@ class Orchestrator():
     
     def get_info(self, prompt, context, query):
         output = self.agent.run(prompt + " " + context, query, session=self.agent.chat_session)
+        print("GETTING INFO")
         while output.startswith("RESPONSE:"):
             print(output[10:])
             context = context + query
