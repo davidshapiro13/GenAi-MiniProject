@@ -26,6 +26,5 @@ class AI():
         extract_and_store_memory(self.client, query_prompt, output, self.memory_session, self.chat_session)
         return output
     
-    def upload_rag(self, path, course_id_value):
-        print(course_id_value)
-        upload_pdf_to_course(self.client, path, course_id_value)
+    def upload_rag(self, path):
+        upload_pdf_to_course(self.client, path, self.memory_session)

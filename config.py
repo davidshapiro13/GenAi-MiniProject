@@ -17,7 +17,7 @@ def normalize_course_id(text: str) -> str:
 
 
 def memory_session_for_user(user_id: str) -> str:
-    return f"mem_{normalize_course_id(user_id)}"
+    return f"mem_{user_id}"
 
 
 def course_session_for_course(course_id: str) -> str:
@@ -28,8 +28,8 @@ def chat_session_for(user_id: str, course_id: str) -> str:
     return f"chat_{normalize_course_id(user_id)}_{course_id}"
 
 def save_user(username: str, user_id: str):
-    with open("users.txt", 'w') as file:
-        file.write(username + "," + user_id)
+    with open("users.txt", 'a') as file:
+        file.write(username + "," + user_id + "\n")
 
 def login():
     previous_user = False
@@ -39,9 +39,11 @@ def login():
             user, user_id = line.split(",")
             if username == user:
                 memory_session = memory_session_for_user(user_id)
+                print(memory_session)
                 previous_user = True
         if not previous_user:
             user_id = "USER" + str(random.randint(0, 10000))
             memory_session = memory_session_for_user(user_id)
+            print(memory_session)
             save_user(username, user_id)
     return memory_session, user_id, previous_user
