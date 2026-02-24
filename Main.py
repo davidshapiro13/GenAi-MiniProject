@@ -29,7 +29,7 @@ orchestrator = Orchestrator(agent)
 def first_time_run():
     prompt = "Do you have a syllabus to add?"
     while True:
-        print(prompt)
+        print("Bot: ", prompt)
         query_prompt = input("You: ")
         output = agent.run(GET_SYLLABUS, query_prompt, session=memory_session)
         output = ast.literal_eval(output)
@@ -42,7 +42,8 @@ def first_time_run():
 if not previous_user:
     first_time_run()
 
-query_prompt = input("How can I help? ")
+print(agent.run(SCHEDULER_SYSTEM, "Welcome the user.", session=memory_session))
+query_prompt = input("You: ")
 while "EXIT" not in query_prompt:
 
     course_rag = retrieve_ctx(

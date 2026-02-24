@@ -28,7 +28,7 @@ class Orchestrator():
         
     def check_approval(self, json, alteration_function):
         approval_question = self.agent.run(APPROVAL_PROMPT, json, self.agent.memory_session)
-        print(approval_question)
+        print("Bot: ", approval_question)
         response = input("You: ")
         decision = self.agent.run(YES_NO_PROMPT, response, "General")
         if decision == "yes":
@@ -39,13 +39,12 @@ class Orchestrator():
             update = self.agent.run(CHANGE_PROMPT, str(json) + " " + response, self.agent.memory_session)
             return self.check_approval(update, alteration_function)
         else:
-            print("No problem. I'll leave the calendar as is.")
+            print("Bot: No problem. I'll leave the calendar as is.")
             return "No change to event"
     
     def delete_function(self, json):
         event_list = self.calendar.get_events()
         event_list.append(json['keywords'])
-        print("EVENT LIST: ", event_list)
         json = self.agent.run(DELETE_PROMPT, event_list, "General")
         if type(json) == str:
             json = ast.literal_eval(json)
@@ -59,9 +58,8 @@ class Orchestrator():
     
     def get_info(self, prompt, context, query):
         output = self.agent.run(prompt + " " + context, query, session=self.agent.memory_session)
-        print("GETTING INFO")
         while output.startswith("RESPONSE:"):
-            print("THIS IS FROM HERE" + output[10:])
+            print("Bot: ", output[10:])
             context = context + query
             query = input("You: ")
             output = self.agent.run(prompt + " " + context, query, session=self.agent.memory_session)
