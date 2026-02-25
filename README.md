@@ -3,6 +3,7 @@
 To run this program:
 
 You need a credentials.json from Google Cloud. Place it in the repository.
+You also need the LLMProxy Key
 
 `pip install requirements.txt`
 `python3 Main.py`
