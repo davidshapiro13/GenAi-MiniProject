@@ -1,3 +1,5 @@
+#Manages memory in the app
+
 from __future__ import annotations
 
 import json

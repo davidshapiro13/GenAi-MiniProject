@@ -1,3 +1,4 @@
+#Code for configuring the bot
 import re
 import random
 
@@ -31,6 +32,7 @@ def save_user(username: str, user_id: str):
     with open("users.txt", 'a') as file:
         file.write(username + "," + user_id + "\n")
 
+#Logs the user into their account
 def login():
     previous_user = False
     username = input("Username: ")
@@ -39,11 +41,9 @@ def login():
             user, user_id = line.split(",")
             if username == user:
                 memory_session = memory_session_for_user(user_id)
-                print(memory_session)
                 previous_user = True
         if not previous_user:
             user_id = "USER" + str(random.randint(0, 10000))
             memory_session = memory_session_for_user(user_id)
-            print(memory_session)
             save_user(username, user_id)
     return memory_session, user_id, previous_user

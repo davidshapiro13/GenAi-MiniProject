@@ -1,13 +1,14 @@
-import datetime
+#Calendar interface with Google API
 import os.path
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 
 class Calendar():
+
+    #Initialize the calendar (code provided by Google)
     def __init__(self):
         self.oldest_day = '2015-05-28T09:00:00-07:00' 
         SCOPES = ["https://www.googleapis.com/auth/calendar"]
@@ -30,17 +31,21 @@ class Calendar():
                 token.write(creds.to_json())
         self.service = build("calendar", "v3", credentials=creds)
 
+    #Create a new event
+    # JSON is information for event
     def create_event(self, json):
         event = json
         event = self.service.events().insert(calendarId='primary', body=event).execute()
         return event.get("htmlLink")
 
+    #Create many events at once
     def mass_create_events(self, json):
         urls = []
         for item in json:
             new_url = self.create_event(item)
             urls.append(new_url)
 
+    #Update an event in the calendar that already exists
     def update_event(self, json):
         updated_event = self.service.events().patch (
             calendarId = 'primary',
@@ -51,8 +56,8 @@ class Calendar():
         return json['event_id']
 
 
+    #List all events
     def get_events(self):
-        
         events_results = self.service.events().list(
             calendarId="primary",
             timeMin='2015-05-28T09:00:00-07:00' ,
@@ -64,6 +69,7 @@ class Calendar():
         events = events_results.get("items", [])
         return events
 
+    #Delete an event
     def delete_event(self, json):
         self.service.events().delete(
             calendarId = 'primary',

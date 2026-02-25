@@ -1,9 +1,11 @@
+# This is the entrance point of the project
+
 from llmproxy import LLMProxy
 from Orchestrator import Orchestrator
 import ast
 from AI import AI
-import random
 from ai_prompts import SCHEDULER_SYSTEM, CLEAN_PROMPT, GET_SYLLABUS, build_scheduler_prompt
+from rag import retrieve_ctx, rag_to_text
 import time
 from config import (
     MODEL,
@@ -14,12 +16,10 @@ from config import (
     login,
     chat_session_for
 )
-from rag import retrieve_ctx, rag_to_text
 
 client = LLMProxy()
 
-print("Welcome to the PlannerAI - Your personal schedule planner.")
-
+print("Welcome to the HAND AI - Your personal schedule planner.")
 memory_session, user_id, previous_user = login()
 course_session = None
 
